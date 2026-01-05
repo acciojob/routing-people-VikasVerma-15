@@ -5,20 +5,20 @@ import { useParams } from "react-router-dom";
 function UserDetails() {
   const { id } = useParams();
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
+    setUser(null); 
 
-    fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        setUser(data);
-        setLoading(false);
-      });
+    setTimeout(() => {
+      fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          setUser(data);
+        });
+    }, 500); 
   }, [id]);
 
-  if (loading) {
+  if (!user) {
     return <div>Loading...</div>;
   }
 
